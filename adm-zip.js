@@ -1,5 +1,6 @@
 var fs = require("fs"),
-    pth = require("path");
+    pth = require("path"),
+    iconv = require('iconv-lite');
 
 fs.existsSync = fs.existsSync || pth.existsSync;
 
@@ -80,7 +81,8 @@ module.exports = function(/*String*/input, encoding) {
             if (item) {
                 var data = item.getData();
                 if (data && data.length) {
-                    return data.toString(encoding || "utf8");
+                    // return data.toString(encoding || "utf8");
+                    return iconv.decode(data, encoding || "utf8" );
                 }
             }
             return "";
