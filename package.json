@@ -1,5 +1,5 @@
 {
-    "name": "adm-zip",
+    "name": "adm-zip-iconv",
     "version": "0.4.7",
     "description": "A Javascript implementation of zip for nodejs. Allows user to create or extract zip files both in memory or to/from disk",
     "keywords": [

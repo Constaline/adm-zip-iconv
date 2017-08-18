@@ -1,5 +1,8 @@
 # ADM-ZIP for NodeJS
-
+# 加入iconv-lite 支持中文文件名不乱码  
+```
+var zip = new AdmZip("./my_file.zip", "GBK");
+```
 ADM-ZIP is a pure JavaScript implementation for zip data compression for [NodeJS](http://nodejs.org/). 
 
 # Installation
@@ -27,6 +30,7 @@ There are no other nodeJS libraries that ADM-ZIP is dependent of
 
 	// reading archives
 	var zip = new AdmZip("./my_file.zip");
+	//	var zip = new AdmZip("./my_file.zip", "GBK");
 	var zipEntries = zip.getEntries(); // an array of ZipEntry records
 
 	zipEntries.forEach(function(zipEntry) {
