@@ -8,7 +8,7 @@ module.exports = function (/*Buffer*/input, /* defualt 'utf-8' */encoding) {
 
     var _entryHeader = new Headers.EntryHeader(),
         _entryName = new Buffer(0),
-        _encoding = encoding || "utf-8";
+        _encoding = encoding || "utf-8",
         _comment = new Buffer(0),
         _isDirectory = false,
         uncompressedData = null,
