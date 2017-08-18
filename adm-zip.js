@@ -7,21 +7,20 @@ var ZipEntry = require("./zipEntry"),
     ZipFile =  require("./zipFile"),
     Utils = require("./util");
 
-module.exports = function(/*String*/input) {
+module.exports = function(/*String*/input, encoding) {
     var _zip = undefined,
         _filename = "";
-
     if (input && typeof input === "string") { // load zip file
         if (fs.existsSync(input)) {
             _filename = input;
-            _zip = new ZipFile(input, Utils.Constants.FILE);
+            _zip = new ZipFile(input, Utils.Constants.FILE, encoding);
         } else {
            throw Utils.Errors.INVALID_FILENAME;
         }
     } else if(input && Buffer.isBuffer(input)) { // load buffer
-        _zip = new ZipFile(input, Utils.Constants.BUFFER);
+        _zip = new ZipFile(input, Utils.Constants.BUFFER, encoding);
     } else { // create new zip file
-        _zip = new ZipFile(null, Utils.Constants.NONE);
+        _zip = new ZipFile(null, Utils.Constants.NONE, encoding);
     }
 
     function getEntry(/*Object*/entry) {
@@ -297,6 +296,7 @@ module.exports = function(/*String*/input) {
          * @return Array
          */
         getEntries : function() {
+            // 设置编码
             if (_zip) {
                return _zip.entries;
             } else {

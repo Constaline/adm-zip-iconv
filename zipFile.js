@@ -2,9 +2,10 @@ var ZipEntry = require("./zipEntry"),
     Headers = require("./headers"),
     Utils = require("./util");
 
-module.exports = function(/*String|Buffer*/input, /*Number*/inputType) {
+module.exports = function(/*String|Buffer*/input, /*Number*/inputType, encoding) {
     var entryList = [],
         entryTable = {},
+        _encoding = encoding || "utf-8",
         _comment = new Buffer(0),
         filename = "",
         fs = require("fs"),
@@ -31,7 +32,7 @@ module.exports = function(/*String|Buffer*/input, /*Number*/inputType) {
         for(var i = 0; i < entryList.length; i++) {
 
             var tmp = index,
-                entry = new ZipEntry(inBuffer);
+                entry = new ZipEntry(inBuffer, _encoding);
             entry.header = inBuffer.slice(tmp, tmp += Utils.Constants.CENHDR);
 
             entry.entryName = inBuffer.slice(tmp, tmp += entry.header.fileNameLength);

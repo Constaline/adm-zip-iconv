@@ -1,12 +1,14 @@
 var Utils = require("./util"),
     Headers = require("./headers"),
     Constants = Utils.Constants,
-    Methods = require("./methods");
+    Methods = require("./methods"),
+    iconv = require('iconv-lite');
 
-module.exports = function (/*Buffer*/input) {
+module.exports = function (/*Buffer*/input, /* defualt 'utf-8' */encoding) {
 
     var _entryHeader = new Headers.EntryHeader(),
         _entryName = new Buffer(0),
+        _encoding = encoding || "utf-8";
         _comment = new Buffer(0),
         _isDirectory = false,
         uncompressedData = null,
@@ -196,10 +198,14 @@ module.exports = function (/*Buffer*/input) {
         get entryName () { return _entryName.toString(); },
         get rawEntryName() { return _entryName; },
         set entryName (val) {
+            // 根据编码设置
+            var nameTemp = iconv.decode(val, _encoding);
             _entryName = Utils.toBuffer(val);
             var lastChar = _entryName[_entryName.length - 1];
             _isDirectory = (lastChar == 47) || (lastChar == 92);
             _entryHeader.fileNameLength = _entryName.length;
+            // 重新设置
+            _entryName = nameTemp; 
         },
 
         get extra () { return _extra; },
